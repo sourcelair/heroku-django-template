@@ -1,6 +1,5 @@
 """
-Django settings for {{ project_name }} project on Heroku. Fore more info, see:
-https://github.com/heroku/heroku-django-template
+Django settings for {{ project_name }} project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.8/topics/settings/
@@ -24,8 +23,6 @@ SECRET_KEY = "{{ secret_key }}"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-TEMPLATE_DEBUG = True
 
 
 # Application definition
@@ -94,8 +91,10 @@ USE_TZ = True
 # Parse database configuration from $DATABASE_URL
 DATABASES['default'] = dj_database_url.config()
 
+POSTGRES_ENGINE = 'django.db.backends.postgresql_psycopg2'
 # Enable Connection Pooling (if desired)
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
+if DATABASES['default']['ENGINE'] == POSTGRES_ENGINE:
+    DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
